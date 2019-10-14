@@ -1,17 +1,18 @@
-import pkg from './package'
+import { Configuration } from '@nuxt/types'
+// import pkg from ('./package')
 
-export default {
+const nuxtConfig: Configuration = {
   mode: 'universal',
 
   /*
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: 'title',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: 'desc' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
@@ -29,7 +30,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/composition-api'],
 
   /*
    ** Nuxt.js modules
@@ -39,6 +40,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa'
   ],
+  buildModules: ['@nuxt/typescript-build'],
   /*
    ** Axios module configuration
    */
@@ -56,6 +58,7 @@ export default {
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
+        if (!config.module) return
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -66,3 +69,5 @@ export default {
     }
   }
 }
+
+export default nuxtConfig
