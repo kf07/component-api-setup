@@ -21,3 +21,16 @@ $ npm run generate
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
 # component-api-setup
+
+```vuejs
+export default createComponent({
+  setup() {
+    const message = reactive({
+      message1: 'Hello Vuejs'
+    })
+    return {
+      message
+    }
+  }
+})
+```

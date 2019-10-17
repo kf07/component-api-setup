@@ -1,36 +1,65 @@
 <template>
-  <section class="container">
+  <div>
+    <button @click="increment">inc</button>
+    <div>Count is: {{ state.count }}, double is: {{ state.double }}</div>
+    <input v-model="state.message" type="text" />
+    <div>{{ state.message }}</div>
+    <div>{{ double }}</div>
+    <div>{{ count }}</div>
+    <div>{{ message }}</div>
+    <div>{{ upperMessage }}</div>
     <div>
-      <logo />
-      <h1 class="title">
-        nuxt-composition-api-setup
-      </h1>
-      <h2 class="subtitle">
-        My incredible Nuxt.js project
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green"
-          >Documentation</a
-        >
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-          >GitHub</a
-        >
-      </div>
+      <div><input v-model.number="numbers.num1" type="number" /></div>
+      <div><input v-model.number="numbers.num2" type="number" /></div>
+      <div>{{ numbers.totalNumber }}</div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import {
+  createComponent,
+  reactive,
+  computed,
+  watch,
+  ref
+} from '@vue/composition-api'
 
-export default {
-  components: {
-    Logo
+export default createComponent({
+  setup() {
+    const state = reactive({
+      count: 0,
+      double: computed(() => state.count * 2),
+      message: 'input message'
+    })
+    const numbers = reactive({
+      num1: 0,
+      num2: 0,
+      totalNumber: computed(() => numbers.num1 + numbers.num2)
+    })
+    const count = ref(0)
+    const message = ref('The quick brown fox jumps over the lazy dog')
+    const upperMessage = message.value.toUpperCase()
+    console.log(upperMessage)
+
+    count.value++
+    console.log(count.value) // 1
+    const double = computed(() => state.count * 2)
+    function increment() {
+      state.count++
+    }
+
+    return {
+      numbers,
+      upperMessage,
+      message,
+      count,
+      state,
+      double,
+      increment
+    }
   }
-}
+})
 </script>
 
 <style>
