@@ -1,20 +1,7 @@
 <template>
   <div>
-    <button @click="increment">inc</button>
-    <div>Count is: {{ state.count }}, double is: {{ state.double }}</div>
-    <input v-model="state.message" type="text" />
-    <div>{{ state.message }}</div>
-    <div>{{ double }}</div>
     <div>{{ count }}</div>
-    <div>{{ message }}</div>
-    <div>{{ upperMessage }}</div>
-    <div>
-      <div><input v-model.number="numbers.num1" type="number" /></div>
-      <div><input v-model.number="numbers.num2" type="number" /></div>
-      <div>{{ numbers.totalNumber }}</div>
-      <div>{{ countRef }}</div>
-      <div>{{ countPlusOneRef }}</div>
-    </div>
+    <div>{{ errorMessage }}</div>
   </div>
 </template>
 
@@ -30,44 +17,21 @@ import {
 
 export default createComponent({
   setup() {
-    const state = reactive({
-      count: 0,
-      double: computed(() => state.count * 2),
-      message: 'input message'
-    })
-    const countRef = ref(0)
-    const countPlusOneRef = computed(() => countRef.value + 1)
-    countRef.value = 5
-    const numbers = reactive({
-      num1: 0,
-      num2: 0,
-      totalNumber: computed(() => numbers.num1 + numbers.num2)
-    })
     const count = ref(0)
-    const message = ref('The quick brown fox jumps over the lazy dog')
-    const upperMessage = message.value.toUpperCase()
-    console.log(upperMessage)
+    setInterval(() => count.value++, 1000)
 
-    count.value++
-    console.log(count.value) // 1
-    const double = computed(() => state.count * 2)
-    function increment() {
-      state.count++
-    }
-    onUpdated(() => {
-      console.log('updated')
+    const errorMessage = ref(null)
+    watch(count, count => {
+      if (count > 10) {
+        errorMessage.value = 'Larger than 10'
+      }
     })
-
+    onUpdated(() => {
+      console.log('update!!')
+    })
     return {
-      countRef,
-      countPlusOneRef,
-      numbers,
-      upperMessage,
-      message,
       count,
-      state,
-      double,
-      increment
+      errorMessage
     }
   }
 })
