@@ -12,6 +12,8 @@
       <div><input v-model.number="numbers.num1" type="number" /></div>
       <div><input v-model.number="numbers.num2" type="number" /></div>
       <div>{{ numbers.totalNumber }}</div>
+      <div>{{ countRef }}</div>
+      <div>{{ countPlusOneRef }}</div>
     </div>
   </div>
 </template>
@@ -22,6 +24,7 @@ import {
   reactive,
   computed,
   watch,
+  onUpdated,
   ref
 } from '@vue/composition-api'
 
@@ -32,6 +35,9 @@ export default createComponent({
       double: computed(() => state.count * 2),
       message: 'input message'
     })
+    const countRef = ref(0)
+    const countPlusOneRef = computed(() => countRef.value + 1)
+    countRef.value = 5
     const numbers = reactive({
       num1: 0,
       num2: 0,
@@ -48,8 +54,13 @@ export default createComponent({
     function increment() {
       state.count++
     }
+    onUpdated(() => {
+      console.log('updated')
+    })
 
     return {
+      countRef,
+      countPlusOneRef,
       numbers,
       upperMessage,
       message,
