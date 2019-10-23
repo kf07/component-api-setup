@@ -1,36 +1,31 @@
 <template>
   <section class="container">
     <div>
-      <logo />
-      <h1 class="title">
-        nuxt-composition-api-setup
-      </h1>
-      <h2 class="subtitle">
-        My incredible Nuxt.js project
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green"
-          >Documentation</a
-        >
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-          >GitHub</a
-        >
-      </div>
+      <div>{{ state.count }}</div>
+      <button @click="countPlus">たす</button>
     </div>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import { createComponent, computed, reactive } from '@vue/composition-api'
+import addCount from '~/use/addCount'
 
-export default {
-  components: {
-    Logo
+export default createComponent({
+  setup() {
+    const state = reactive({
+      count: 0
+    })
+    // const add = addCount()
+    const countPlus = () => {
+      state.count = addCount(state.count)
+    }
+    return {
+      state,
+      countPlus
+    }
   }
-}
+})
 </script>
 
 <style>
