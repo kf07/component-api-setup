@@ -7,7 +7,7 @@
     </label>
     <label>
       メモ
-      <input v-model="todoText.message" type="text" />
+      <input v-model="todoText.memo" type="text" />
     </label>
     <button type="button" @click="sendTodo">送信</button>
   </form>
@@ -20,14 +20,15 @@ import { TodoItem } from '~/types/todoType'
 export default defineComponent({
   name: 'TodoInput',
   setup(props, context) {
-    const sendTodo = () => {
-      console.log('test')
-      context.emit('emit-send', todoText)
-    }
     const todoText: TodoItem = reactive({
       title: '',
       memo: ''
     })
+    const sendTodo = () => {
+      context.emit('emit-send', { title: todoText.title, memo: todoText.memo })
+      // todoText.title = ''
+      // todoText.memo = ''
+    }
     return {
       sendTodo,
       todoText
