@@ -1,5 +1,12 @@
 <template>
-  <div></div>
+  <div>
+    <ul>
+      <li v-for="todo in todos" :key="todo.title" class="todo-item">
+        <span class="title">{{ todo.title }}</span>
+        <span class="memo">{{ todo.memo }}</span>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script lang="ts">
@@ -9,10 +16,18 @@ import { TodoItem } from '~/types/todoType'
 export default defineComponent({
   name: 'TodoList',
   props: {
-    todo: Object as PropType<TodoItem>
+    todos: Array as PropType<TodoItem[]>
   },
-  setup() {}
+  setup(props) {
+    console.log(props.todos)
+  }
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.todo-item {
+  .title {
+    margin-right: 20px;
+  }
+}
+</style>

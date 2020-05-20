@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="todo">
     <TodoInput @emit-send="todoAdd" />
-    <TodoList />
+    <TodoList :todos="state.todos" />
   </div>
 </template>
 
@@ -9,11 +9,8 @@
 import { defineComponent, reactive, watchEffect } from '@vue/composition-api'
 import TodoList from './TodoList.vue'
 import TodoInput from '~/components/TodoInput.vue'
-import { TodoItem } from '@/types/TodoType'
+import { TodoItem, TodoData } from '@/types/TodoType'
 
-export interface TodoData {
-  todos: TodoItem[]
-}
 export default defineComponent({
   name: 'Todo',
   components: { TodoInput, TodoList },
@@ -22,14 +19,20 @@ export default defineComponent({
       todos: []
     })
     const todoAdd = (todos: TodoItem) => {
+      console.log(todos)
       state.todos.push(todos)
     }
     watchEffect(() => console.log(state.todos))
     return {
-      todoAdd
+      todoAdd,
+      state
     }
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.todo {
+  margin-top: 60px;
+}
+</style>

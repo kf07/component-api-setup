@@ -26,8 +26,8 @@ export default defineComponent({
     })
     const sendTodo = () => {
       context.emit('emit-send', { title: todoText.title, memo: todoText.memo })
-      // todoText.title = ''
-      // todoText.memo = ''
+      todoText.title = ''
+      todoText.memo = ''
     }
     return {
       sendTodo,
