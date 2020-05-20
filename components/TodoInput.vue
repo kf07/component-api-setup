@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from '@vue/composition-api'
+import { TodoItem } from '~/types/todoType'
 
 export default defineComponent({
   name: 'TodoInput',
@@ -23,9 +24,9 @@ export default defineComponent({
       console.log('test')
       context.emit('emit-send', todoText)
     }
-    const todoText = reactive({
+    const todoText: TodoItem = reactive({
       title: '',
-      message: ''
+      memo: ''
     })
     return {
       sendTodo,

@@ -7,8 +7,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive, watchEffect } from '@vue/composition-api'
-import TodoList, { TodoItem } from './TodoList.vue'
+import TodoList from './TodoList.vue'
 import TodoInput from '~/components/TodoInput.vue'
+import { TodoItem } from '@/types/TodoType'
 
 export interface TodoData {
   todos: TodoItem[]

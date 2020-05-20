@@ -4,10 +4,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from '@vue/composition-api'
-export interface TodoItem {
-  title: string
-  message: string
-}
+import { TodoItem } from '~/types/todoType'
+
 export default defineComponent({
   name: 'TodoList',
   props: {
